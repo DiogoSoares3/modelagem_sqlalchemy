@@ -16,4 +16,4 @@ class Lote(ModelBase):  # Herdando modelo base
     
 
     def __repr__(self) -> str:  # Método usado para definir a representação "oficial" de um objeto
-        return f'<Revendedor: {self.id}>'
+        return f'<Lote: {self.id}>'

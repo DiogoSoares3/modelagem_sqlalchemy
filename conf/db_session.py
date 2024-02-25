@@ -59,7 +59,9 @@ def create_engine(sqlite: bool=False) -> Engine:
 
 def create_session() -> Session:
     """
-    Função para a criar sessão de conexão ao banco de dados
+    Função para a criar sessão de conexão ao banco de dados.
+    Sessões são conexões temporárias ao banco de dados. 
+    Dentro das sessões podemos realizar o CRUD no banco de dados.
     """
     
     global __engine
