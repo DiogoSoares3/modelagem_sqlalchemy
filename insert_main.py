@@ -253,11 +253,10 @@ if __name__ == '__main__':
     # picole = insert_picole()
     # print(picole.id)
     
-    picole = insert_picole()
-    print(picole.sabor.nome)
-    print(picole.tipo_embalagem.nome)
-    print(picole.tipo_picole.nome)
-    print(picole.ingredientes)
-    print(picole.conservantes)
-    print(picole.aditivos_nutritivos)
-
+    # picole = insert_picole()
+    # print(picole.sabor.nome)
+    # print(picole.tipo_embalagem.nome)
+    # print(picole.tipo_picole.nome)
+    # print(picole.ingredientes)
+    # print(picole.conservantes)
+    # print(picole.aditivos_nutritivos)
