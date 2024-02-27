@@ -45,16 +45,15 @@ class Picole(ModelBase):
     preco: float = sa.Column(sa.DECIMAL(8,2), nullable=False)
     
     id_tipo_picole: int = sa.Column(sa.BigInteger, sa.ForeignKey('tipos_picole.id')) # Chave estrangeira --> tabela.coluna 
-    tipo_picole: TipoPicole = orm.relationship('TipoPicole', lazy='joined') # Configuração interna do sqlalchemy necessária quando tem chave estrangeira
+    tipo_picole: TipoPicole = orm.relationship('TipoPicole', lazy='joined')  # Com lazy='joined' ou False é automaticamente feito um join entre as duas tabelas
     
-    id_sabor: int = sa.Column(sa.BigInteger, sa.ForeignKey('sabores.id'))
-    sabor: Sabor = orm.relationship('Sabor', lazy='joined') 
+    id_sabor: int = sa.Column(sa.BigInteger,  sa.ForeignKey('sabores.id'))
+    sabor: Sabor = orm.relationship('Sabor', lazy='joined')  # Ou lazy='select' ou True, faz um select automatico do sabor  
     
     id_tipo_embalagem: int = sa.Column(sa.BigInteger, sa.ForeignKey('tipos_embalagem.id'))
-    tipo_embalagem: TipoEmbalagem = orm.relationship('TipoEmbalagem', lazy='joined') 
-    
+    tipo_embalagem: TipoEmbalagem = orm.relationship('TipoEmbalagem', lazy='joined')  # lazy='dynamic' retorna a query em si, para retornar o resultado devemos aplicar um .all() no final da query    
     # Um picole pode ter vários ingredientes
-    ingredientes: List[Ingrediente] = orm.relationship('Ingrediente', secondary=ingredientes_picole, backref='ingrediente', lazy='joined')
+    ingredientes: List[Ingrediente] = orm.relationship('Ingrediente', secondary=ingredientes_picole, backref='ingrediente', lazy='joined')  # lazy='subquery' ao invés de join, faz subquery (menos perfomático)
     
     # Um picole pode ter vários conservantes ou mesmo nenhum
     conservantes: Optional[List[Conservante]] = orm.relationship('Conservante', secondary=conservantes_picole, backref='conservante', lazy='joined')

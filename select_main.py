@@ -59,6 +59,7 @@ def select_filtro_sabor(id_sabor: int) -> None:
 def select_complexo_picole() -> None:
     with create_session() as session:
         picoles: List[Picole] = session.query(Picole).all()
+        print(picoles)
         
         for picole in picoles:
             print(f'ID: {picole.id}')
@@ -179,6 +180,7 @@ def select_quantidade_lote() -> None:
     WHERE preco > 5 AND quantidade > 30
 	GROUP BY quantidade
 	ORDER BY contador DESC
+    LIMIT 10
     """
 def super_consulta() -> None:
     with create_session() as session:
@@ -198,10 +200,11 @@ def super_consulta() -> None:
 
 if __name__ == '__main__':
     #select_todos_aditivos_nutritivos()
+    select_complexo_picole()
     #select_groupby_picole()
     #select_limit()
     #select_count_revendedor()
     #select_agregacao()
     #select_preco_picole_quantidade_lote()
     #select_quantidade_lote()
-    super_consulta()
+    #super_consulta()

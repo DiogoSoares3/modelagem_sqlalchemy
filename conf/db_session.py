@@ -52,7 +52,7 @@ def create_engine(sqlite: bool=False) -> Engine:
         __engine = sa.create_engine(url=conn_str, echo=False, connect_args={"check_same_thread": False}) # Variável global __engine com o SQLite
     else:  # Se for Postgres
         conn_str = f"postgresql://{usuario}:{senha}@localhost:5432/picoles" # Conexão com o seu usuário do Postgresql
-        __engine = sa.create_engine(url=conn_str, echo=False)
+        __engine = sa.create_engine(url=conn_str, echo=True)  # echo=True vai mostrar qual consulta SQL está sendo feita em cada sessão
         
     return __engine
 
