@@ -1,3 +1,5 @@
+import asyncio
+
 from conf.db_session import create_session
 from models.aditivo_nutritivo import AditivoNutritivo
 from models.sabor import Sabor
@@ -12,7 +14,7 @@ from models.picole import Picole
 
 
 # 1. Aditivo Nutritivo
-def insert_aditivo_nutritivo() -> AditivoNutritivo:
+async def insert_aditivo_nutritivo() -> AditivoNutritivo:
     print('Cadastro Aditivo Nutritivo')
     
     nome: str = input('Informe o nome do Aditivo Nutritivo: ')
@@ -20,100 +22,106 @@ def insert_aditivo_nutritivo() -> AditivoNutritivo:
     
     aditivo_nutritivo: AditivoNutritivo = AditivoNutritivo(nome=nome, formula_quimica=formula_quimica)
     
-    with create_session() as session:  # Criando um contexto na variável session
+    async with create_session() as session:  # Criando um contexto na variável session
         # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(aditivo_nutritivo)  # Adicionando o objeto AditivoNutritivo
+        session.add(aditivo_nutritivo)  # 'session.add()' não é um método async
+        
+        await asyncio.sleep(1)
         
         # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
-
+        await session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+        # 'session.commit()' é um método
+        
     print('Aditivo Nutritivo cadastrado com sucesso')
+    print('=============================')
     
     return aditivo_nutritivo
 
  
 # 2. Sabor
-def insert_sabor() -> Sabor:
+async def insert_sabor() -> Sabor:
     print('Cadastro Sabor')
     
     nome: str = input('Informe o nome do Sabor: ')
     
     sabor: Sabor = Sabor(nome=nome)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(sabor)  # Adicionando o objeto Sabor
+    async with create_session() as session:  
+        session.add(sabor)  
         
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+        await session.commit() 
 
     print('Sabor cadastrado com sucesso')
+    print('=============================')
     
     return sabor
 
 
 # 3. Tipo Embalagem
-def insert_tipo_embalagem() -> TipoEmbalagem:
+async def insert_tipo_embalagem() -> TipoEmbalagem:
     print('Cadastro Tipo Embalagem')
     
     nome: str = input('Informe o nome do Tipo da embalagem: ')
     
     tipo_embalagem: TipoEmbalagem = TipoEmbalagem(nome=nome)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(tipo_embalagem)  # Adicionando o objeto TipoEmbalagem
+    async with create_session() as session:  
+        session.add(tipo_embalagem) 
         
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+        await asyncio.sleep(1)
+        
+        await session.commit() 
     
     print('Tipo Embalagem cadastrado com sucesso')
+    print('=============================')
 
     return tipo_embalagem
 
 
 # 4. Tipo Picole
-def insert_tipo_picole() -> TipoPicole:
+async def insert_tipo_picole() -> TipoPicole:
     print('Cadastro Tipo Picole')
     
     nome: str = input('Informe o nome do Tipo Picole: ')
     
     tipo_picole: TipoPicole = TipoPicole(nome=nome)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(tipo_picole)  # Adicionando o objeto TipoPicole
+    async with create_session() as session: 
+        session.add(tipo_picole)  
         
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+        await asyncio.sleep(1)
+        
+        await session.commit()
 
     print('Tipo Picole cadastrado com sucesso')
+    print('=============================')
 
     return tipo_picole
     
 
 # 5. Ingrediente
-def insert_ingrediente() -> Ingrediente:
+async def insert_ingrediente() -> Ingrediente:
     print('Cadastro Ingrediente')
     
     nome: str = input('Informe o nome do Ingrediente: ')
     
     ingrediente: Ingrediente = Ingrediente(nome=nome)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(ingrediente)  # Adicionando o objeto Ingrediente
+    async with create_session() as session: 
+        session.add(ingrediente)
         
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+        await asyncio.sleep(1)
+        
+        await session.commit()
 
     print('Ingrediente cadastrado com sucesso')
+    print('=============================')
     
     return ingrediente
     
     
 # 6. Conservante
-def insert_conservante() -> Conservante:
+async def insert_conservante() -> Conservante:
     print('Cadastro Conservante')
     
     nome: str = input('Informe o nome do Conservante: ')
@@ -121,20 +129,21 @@ def insert_conservante() -> Conservante:
     
     conservante: Conservante = Conservante(nome=nome, descricao=descricao)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(conservante)  # Adicionando o objeto Conservante
+    async with create_session() as session:  
+        session.add(conservante)
         
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+        await asyncio.sleep(1)
+        
+        await session.commit()
 
     print('Conservante cadastrado com sucesso')
+    print('=============================')
     
     return conservante
 
 
 # 7. Revendedor
-def insert_revendedor() -> Revendedor:
+async def insert_revendedor() -> Revendedor:
     print('Cadastro Revendedor')
     
     cnpj: str = input('Informe o cnpj do Revendedor: ')
@@ -143,20 +152,21 @@ def insert_revendedor() -> Revendedor:
     
     revendedor: Revendedor = Revendedor(cnpj=cnpj, razao_social=razao_social, contato=contato)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(revendedor)  # Adicionando o objeto Revendedor
+    async with create_session() as session:
+        session.add(revendedor)
         
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+        await asyncio.sleep(1)
+        
+        await session.commit()
 
     print('Revendedor cadastrado com sucesso')
+    print('=============================')
     
     return revendedor
 
 
 # 8. Lote
-def insert_lote() -> Lote:
+async def insert_lote() -> Lote:
     print('Cadastro Lote')
     
     id_tipo_picole: int = int(input('Informe o ID do tipo do picole: '))
@@ -164,20 +174,21 @@ def insert_lote() -> Lote:
 
     lote: Lote = Lote(id_tipo_picole=id_tipo_picole, quantidade=quantidade)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(lote)  # Adicionando o objeto Lote
+    async with create_session() as session:  
+        session.add(lote) 
         
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+        await asyncio.sleep(1)
+        
+        await session.commit() 
 
     print('Lote cadastrado com sucesso')
+    print('=============================')
     
     return lote
 
 
 # 9. Nota Fiscal
-def insert_nota_fiscal() -> NotaFiscal:
+async def insert_nota_fiscal() -> NotaFiscal:
     print('Cadastro Nota Fiscal')
     
     valor: float = float(input('Informe o valor da nota fiscal: '))
@@ -187,26 +198,26 @@ def insert_nota_fiscal() -> NotaFiscal:
 
     nota_fiscal: NotaFiscal = NotaFiscal(valor=valor, numero_serie=numero_serie, descricao=descricao, id_revendedor=id_revendedor)
     
-    lote1 = insert_lote()
+    lote1 = await insert_lote()
     nota_fiscal.lotes.append(lote1)
     
-    lote2 = insert_lote()
+    lote2 = await insert_lote()
     nota_fiscal.lotes.append(lote2)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(nota_fiscal)  # Adicionando o objeto NotaFiscal
-        
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+    async with create_session() as session:
+        session.add(nota_fiscal)
+                
+        await session.commit()
+        await session.refresh(nota_fiscal)  # Para podermos acessa-lo por completo
 
     print('Nota Fiscal cadastrada com sucesso')
+    print('=============================')
     
     return nota_fiscal
 
 
 # 10. Picole
-def insert_picole() -> Picole:
+async def insert_picole() -> Picole:
     print('Cadastro de Picole')
     
     preco: float = float(input('Informe o preço do picolé: '))
@@ -216,48 +227,41 @@ def insert_picole() -> Picole:
 
     picole: Picole = Picole(preco=preco, id_sabor=id_sabor, id_tipo_embalagem=id_tipo_embalagem, id_tipo_picole=id_tipo_picole)
     
-    ingrediente1 = insert_ingrediente()  # Obrigatório
+    ingrediente1 = await insert_ingrediente()  # Obrigatório
     picole.ingredientes.append(ingrediente1)
     
-    conservante1 = insert_conservante()  # Opcional
+    conservante1 = await insert_conservante()  # Opcional
     picole.conservantes.append(conservante1)
     
-    aditivos_nutritivo1 = insert_aditivo_nutritivo()  # Opcional
+    aditivos_nutritivo1 = await insert_aditivo_nutritivo()  # Opcional
     picole.aditivos_nutritivos.append(aditivos_nutritivo1)
     
-    with create_session() as session:  # Criando um contexto na variável session
-        # Se eu não estivesse em uma sessão, seria necessário fechar a sessão com session.close()
-        session.add(picole)  # Adicionando o objeto Picole
-        
-        # Commita para o banco de dados todas as operações que ocorreram dentro da sessão de uma vez só
-        session.commit() # O commit é realizado em batch contendo todas as operações que foram realizadas dentro do contexto
+    async with create_session() as session:  
+        session.add(picole)
+                
+        await session.commit()
+        await session.refresh(picole)  # Para podermos acessa-lo por completo
 
     print('Picole cadastrado com sucesso')
+    print('=============================')
     
     return picole
 
 
 
 if __name__ == '__main__':
-    # insert_aditivo_nutritivo()
-    # insert_sabor()
-    # insert_tipo_embalagem()
-    # insert_tipo_picole()
-    # insert_ingrediente()
-    # insert_conservante()
-    # revendedor = insert_revendedor()
-    # print(revendedor.cnpj)
-    # lote = insert_lote()
-    # print(lote.id)
-    # print(lote.id_tipo_picole)
-    # picole = insert_picole()
-    # print(picole.id)
+    event = asyncio.get_event_loop()
+    # tarefa1 = event.create_task(insert_aditivo_nutritivo())
+    # tarefa2 = event.create_task(insert_sabor())
+    # tarefa3 = event.create_task(insert_tipo_embalagem())
+    # tarefa4 = event.create_task(insert_tipo_picole())
+    # tarefa5 = event.create_task(insert_ingrediente())
+    # tarefa6 = event.create_task(insert_conservante())
+    # tarefa7 = event.create_task(insert_revendedor())
+    # tarefa8 = event.create_task(insert_lote())
+    tarefa9 = event.create_task(insert_nota_fiscal())
+    tarefa10 = event.create_task(insert_picole())
+    tarefas = asyncio.gather(tarefa9, tarefa10)  # tarefa1, tarefa2, tarefa3, tarefa4, tarefa5, tarefa6, tarefa7, tarefa8, 
+    event.run_until_complete(tarefas)
     
-    # picole = insert_picole()
-    # print(picole.sabor.nome)
-    # print(picole.tipo_embalagem.nome)
-    # print(picole.tipo_picole.nome)
-    # print(picole.ingredientes)
-    # print(picole.conservantes)
-    # print(picole.aditivos_nutritivos)
-    pass
+    # pic = asyncio.run(insert_picole())

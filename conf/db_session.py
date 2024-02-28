@@ -41,7 +41,7 @@ def create_engine(sqlite: bool=False) -> AsyncEngine:
         )
     else:
         # PostgreSQL
-        conn_str = f'postgres+asyncpg://{usuario}:{senha}@localhost:5432/picoles'
+        conn_str = f'postgresql+asyncpg://{usuario}:{senha}@localhost:5432/picoles'
         __async_engine = create_async_engine(
             url=conn_str,
             echo=False,  # 'echo=True' imprime a consulta sql que o sqlalchemy faz 
