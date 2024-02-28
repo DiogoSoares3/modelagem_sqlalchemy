@@ -43,4 +43,5 @@ def deletar_revendedor(id_revendedor: int) -> None:
 
 if __name__ == '__main__':
     #deletar_picole(id_picole=1)
-    deletar_revendedor(id_revendedor=2) # Erro pois o revendedor com id 2 tem referência na tabela notas_fiscais (impedimento)
+    deletar_revendedor(id_revendedor=2) # (impedimento) Erro pois o revendedor com id 2 tem referência na tabela notas_fiscais
+    # Mas com cascata ele vai ser forçado a deletar
