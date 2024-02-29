@@ -276,7 +276,7 @@ async def popular():
                          populate_ingrediente(),
                          populate_revendedor())  # populando eles concorrentemente
     
-    # Não podiam estar dentro do gather pois são dependentes
+    # Não podem estar dentro do gather pois são dependentes de valores das tabelas populadas acima
     await populate_lote()  
 
     await populate_nota_fiscal()

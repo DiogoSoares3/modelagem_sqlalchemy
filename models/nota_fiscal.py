@@ -26,7 +26,7 @@ class NotaFiscal(ModelBase):
     numero_serie: str = sa.Column(sa.String(45), unique=True, nullable=False)
     descricao: str = sa.Column(sa.String(200), nullable=False)
 
-    id_revendedor: int = sa.Column(sa.BigInteger, sa.ForeignKey('revendedores.id', ondelete='CASCADE'))  # Efeito cascata quando ocorrer a exclusao de um revendedor ocorrer (default é impedimento)
+    id_revendedor: int = sa.Column(sa.BigInteger, sa.ForeignKey('revendedores.id', ondelete='CASCADE'))  # Efeito cascata quando ocorrer a exclusao de um revendedor ocorrer (default é impedimento). Temos a anulação como opção tbm
     revendedor: Revendedor = orm.relationship('Revendedor', lazy='joined', cascade='delete')  # Vai realizar o join para obter o relacionamento e vai deletar o registro todo quando houver cascade
     
     # Uma nota Fiscal pode ter vários lotes e um lote está ligado a uma nota fiscal

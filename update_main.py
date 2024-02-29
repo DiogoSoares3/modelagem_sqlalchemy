@@ -26,7 +26,7 @@ async def atualizar_sabor(id_sabor: int, novo_nome: str) -> None:
 async def atualizar_picole(id_picole: int, novo_preco: float, novo_id_sabor: int=None):
     async with create_session() as session:
         # Passo 1:
-        picole: Picole = (await session.execute(select(Picole).filter(Picole.id == id_picole))).scalars().unique().one_or_none()
+        picole: Picole = (await session.execute(select(Picole).filter(Picole.id == id_picole))).unique().scalar_one_or_none()
                 
         if picole:
             # Passo 2:
@@ -43,4 +43,4 @@ async def atualizar_picole(id_picole: int, novo_preco: float, novo_id_sabor: int
 
 if __name__ == '__main__':
     #asyncio.run(atualizar_sabor(id_sabor=3, novo_nome='oalal'))
-    asyncio.run(atualizar_picole(id_picole=30, novo_preco=3.45, novo_id_sabor=14))
+    asyncio.run(atualizar_picole(id_picole=30, novo_preco=5.45, novo_id_sabor=14))
