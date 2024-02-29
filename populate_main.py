@@ -274,15 +274,13 @@ async def popular():
                          populate_tipo_embalagem(),
                          populate_tipo_picole(),
                          populate_ingrediente(),
-                         populate_revendedor())
+                         populate_revendedor())  # populando eles concorrentemente
     
-    #8) Lotes
-    await populate_lote()
+    # Não podiam estar dentro do gather pois são dependentes
+    await populate_lote()  
 
-    #9) Notas Fiscais
     await populate_nota_fiscal()
 
-    #10) Picole
     await populate_picole()
 
 

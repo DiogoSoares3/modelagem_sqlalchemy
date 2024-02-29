@@ -208,7 +208,7 @@ async def insert_nota_fiscal() -> NotaFiscal:
         session.add(nota_fiscal)
                 
         await session.commit()
-        await session.refresh(nota_fiscal)  # Para podermos acessa-lo por completo
+        await session.refresh(nota_fiscal)  # Para podermos acessa-lo por completo (já que a versão do banco não é atualizada automaticamente)
 
     print('Nota Fiscal cadastrada com sucesso')
     print('=============================')
@@ -240,7 +240,7 @@ async def insert_picole() -> Picole:
         session.add(picole)
                 
         await session.commit()
-        await session.refresh(picole)  # Para podermos acessa-lo por completo
+        await session.refresh(picole)  # Para podermos acessa-lo por completo (conservantes, ingredientes e aditivos)
 
     print('Picole cadastrado com sucesso')
     print('=============================')
