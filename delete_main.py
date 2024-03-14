@@ -28,7 +28,7 @@ async def deletar_picole(id_picole: int) -> None:
 async def deletar_revendedor(id_revendedor: int) -> None:
     async with create_session() as session:
         # Passo 1:
-        revendedor: Revendedor = (await session.execute(select(Revendedor).filter(Revendedor.id == id_revendedor))).scalar_one_or_none()
+        revendedor: Optional[Revendedor] = (await session.execute(select(Revendedor).filter(Revendedor.id == id_revendedor))).scalar_one_or_none()
         
         if revendedor:
             # Passo 2:
@@ -43,5 +43,5 @@ async def deletar_revendedor(id_revendedor: int) -> None:
 if __name__ == '__main__':
     el = asyncio.get_event_loop()
     el.run_until_complete(deletar_picole(id_picole=1))
-    el.run_until_complete(deletar_revendedor(id_revendedor=13)) # (impedimento por default) Erro pois o revendedor com id 2 tem referência na tabela notas_fiscais
+    el.run_until_complete(deletar_revendedor(id_revendedor=13)) # (impedimento por default) Erro pois o revendedor com id 13 tem referência na tabela notas_fiscais
     # Mas com cascata ele vai ser forçado a deletar (nesse caso setamos cascate=True em notas_fiscais)
